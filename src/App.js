@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
-function App() {
+const App = () => {
+  const [comentarios, setComentarios] = React.useState([]);
+  const [input, setInput] = React.useState('');
+  const inputElement = React.useRef(); // utilizando para sempre ter a referencia de onde 
+
+  function handleClick() {
+    setComentarios((comentarios) => [...comentarios, input]);
+    setInput('');
+    inputElement.current.focus();
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ul>
+        {comentarios.map((comentario) => (
+          <li key={comentario}>{comentario}</li>
+        ))}
+      </ul>
+      <input
+        type="text"
+        value={input}
+        ref={inputElement}
+        onChange={({ target }) => setInput(target.value)}
+      />
+      <br />
+      <button onClick={handleClick}>Enviar</button>
     </div>
   );
-}
+};
 
 export default App;
